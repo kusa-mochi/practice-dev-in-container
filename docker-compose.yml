@@ -4,6 +4,7 @@ services:
 #    image: whoatemyapplepie/nextjsapp:0.1.0-alpha
     build:
       context: .
+      dockerfile: ./nextjsapp.Dockerfile
     tty: true
     ports:
       - 3000:3000
