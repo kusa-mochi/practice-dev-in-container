@@ -1,0 +1,32 @@
+@startuml work-flow
+
+actor Developer as developer
+participant Container as container
+participant "Shared Folder" as folder
+database "Docker Registry" as docker_registry
+database "Git Remote Repository" as git
+
+developer -> folder : get the "docker-compose.yml" file.
+activate developer
+folder --> developer : docker-compose.yml
+deactivate developer
+developer -> developer : run "docker-compose up".
+activate developer
+developer -> docker_registry : get the docker image.
+docker_registry --> developer : docker image
+developer -> container ** : generate a container
+    container -> git : run "git pull"
+    activate container
+    git --> container : master(or main) branch code
+    deactivate container
+deactivate developer
+
+developer -> container : remote development
+activate developer
+container -> container : build
+activate container
+container --> developer : output of a build
+deactivate container
+deactivate developer
+
+@enduml
